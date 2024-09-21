@@ -1,0 +1,57 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'registerstyle.css' %}">
+</head>
+{% block content %}
+<div class="container mt-5">
+    <center>
+        <h1>Welcome to BUKTREE</h1>
+        <p>Let's live under the shade of fiction</p>
+    </center>
+</div>
+<center>
+    <form class="form" method="POST">
+        {% csrf_token %}
+        <div class="d-flex flex-column align-items-center mt-5">
+        <label>
+            {% if form.non_field_errors %}
+                <div class="error"> {{ form.non_field_errors }} </div>
+            {% endif %}
+        </label>
+        <label>
+            <input class="input" type="text" name="username"
+                {% if form.username.value %}
+                value="{{ form.username.value }}"
+                {% endif %}
+                {% if form.username.field.required %}required{% endif %}>
+
+            {% if form.username.errors %}
+            <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+            <span>Username</span>
+        </label>
+        <label>
+            <input class="input" type="password" name="password"
+                {% if form.password.value %}
+                value="{{ form.password.value }}"
+                {% endif %}
+                {% if form.password.field.required %}required{% endif %}>
+
+            {% if form.password.errors %}
+            <div class="error">{{ form.password.errors }}</div>
+            {% endif %}
+            <span>Password</span>
+        </label>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
+        </div>
+    </form>
+    <a href="{% url 'password_reset' %}"> <button class="btn btn-primary">Forgot password</button></a>
+    <p class="mt-3">Don't have an account? <a href="{% url 'registeruser' %}">Sign Up</a></p>
+</center>
+{% endblock content %}
+
